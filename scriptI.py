@@ -21,8 +21,27 @@ deaths = [90,4000,16,3103,179,184,408,682,5,1023,43,319,688,259,37,11,2068,269,3
 
 # 1
 # Update Recorded Damages
+def convert_damages(damages, conversion):
+    converted_damages = []
+    for damage in damages:
+        if damage == "Damages not recorded":
+            converted_damages.append(damage)
+        else:
+            # Take the last character to determine whether it's in millions or billions
+            suffix = damage[-1]
+            if suffix in conversion:
+                # If it's in millions/billions, convert to float and multiply by the appropriate amount
+                amount = float(damage[:-1])
+                converted_damages.append(amount * conversion[suffix])
+    return converted_damages
+
+
 conversion = {"M": 1000000,
               "B": 1000000000}
+
+converted_damages = convert_damages(damages, conversion)
+print(converted_damages)
+
 
 # test function by updating damages
 
@@ -76,3 +95,4 @@ damage_scale = {0: 0,
                 4: 50000000000}
   
 # categorize hurricanes in new dictionary with damage severity as key
+conversion = {"M": 1000000, "B": 1000000000}
